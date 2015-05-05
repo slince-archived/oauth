@@ -4,9 +4,11 @@ namespace Slince\OAuth;
 abstract class AbstructThirdPartySite implements ThirdPartySiteInterface
 {
 
-    private $_clientId;
+    static $signal;
+    
+    protected $_clientId;
 
-    private $_clientSecret;
+    protected $_clientSecret;
 
     function __construct($clientId, $clientSecret)
     {

@@ -1,0 +1,17 @@
+{
+    "name": "slince/oauth",
+    "description": "slince oauth library",
+    "license": "apache2",
+    "authors": [
+        {
+            "name": "Tao",
+            "email": "taosikai@yeah.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "psr-4": {
+            "guzzlehttp/guzzle" : "5.2.0"
+        }
+    }
+}
