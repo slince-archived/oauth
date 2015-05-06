@@ -8,13 +8,15 @@ abstract class AbstractUser implements UserInterface
 
     protected $_userInfo = [];
     
-    
     protected $_fromSite;
+    
+    protected $_accessToken;
+    
+    protected $_refreshToken;
 
-    function __construct($id, $userInfo, $fromSite)
+    function __construct($id, $fromSite)
     {
         $this->_id = $id;
-        $this->_userInfo = $userInfo;
         $this->_fromSite = $fromSite;
     }
 
