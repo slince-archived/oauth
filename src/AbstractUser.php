@@ -1,20 +1,21 @@
 <?php
 namespace Slince\OAuth;
 
-abstract class AbstructUser implements UserInterface
+abstract class AbstractUser implements UserInterface
 {
 
-    private $_id;
+    protected $_id;
 
     protected $_userInfo = [];
     
-    protected $_signal;
+    
+    protected $_fromSite;
 
-    function __construct($id, $userInfo, $signal)
+    function __construct($id, $userInfo, $fromSite)
     {
         $this->_id = $id;
         $this->_userInfo = $userInfo;
-        $this->_signal = $signal;
+        $this->_fromSite = $fromSite;
     }
 
     function getId()
@@ -27,8 +28,8 @@ abstract class AbstructUser implements UserInterface
         return isset($this->_userInfo[$attribute]) ? $this->_userInfo[$attribute] : null;
     }
     
-    function getSignal()
+    function getFromSite()
     {
-        return $this->_signal;
+        return $this->_fromSite;
     }
 }

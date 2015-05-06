@@ -1,13 +1,12 @@
 <?php
 namespace Slince\OAuth;
 
-class Baidu extends AbstructThirdPartySite
+class Baidu extends AbstractSite
 {
 
     static $signal = 'baidu';
     
     function getCurrentUser()
     {
-        
     }
 }

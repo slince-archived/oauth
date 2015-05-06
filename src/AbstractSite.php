@@ -1,7 +1,7 @@
 <?php
 namespace Slince\OAuth;
 
-abstract class AbstructThirdPartySite implements ThirdPartySiteInterface
+abstract class AbstractSite implements SiteInterface
 {
 
     static $signal;
