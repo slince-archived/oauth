@@ -9,6 +9,10 @@ abstract class AbstractSite implements SiteInterface
     protected $_clientId;
 
     protected $_clientSecret;
+    
+    protected $_links = [];
+    
+    protected $_api = [];
 
     function __construct($clientId, $clientSecret)
     {
