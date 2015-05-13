@@ -8,5 +8,6 @@ class Baidu extends AbstractSite
     
     function getCurrentUser()
     {
+        
     }
 }

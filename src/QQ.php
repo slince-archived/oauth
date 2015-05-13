@@ -20,7 +20,11 @@ class QQ extends AbstractSite
     {
         $this->_urls = $urls;
     }
-    function getCurrentUser()
+    /**
+     * 当前用户
+     */
+    function me()
     {
+        
     }
 }
