@@ -11,7 +11,7 @@ class QQ extends AbstractSite
         'tokenUrl' => 'https://graph.qq.com/oauth2.0/token',
         'refreshTokenUrl' => 'https://graph.qq.com/oauth2.0/token'
     ];
-    
+    protected $_requestHttpMethod = 'GET';
     function setUrl($name, $url)
     {
         $this->_urls[$name] = $url;
