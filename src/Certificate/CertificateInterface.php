@@ -11,4 +11,8 @@ interface CertificateInterface
     function getClientId();
 
     function getClientSecret();
+
+    function setCallbackUrl();
+
+    function getCallbackUrl();
 }

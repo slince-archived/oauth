@@ -8,10 +8,13 @@ class Certificate
 
     protected $_clientSecret;
 
-    function __construct($clientId, $clientSecret)
+    protected $_callbackUrl;
+
+    function __construct($clientId, $clientSecret, $callbackUrl)
     {
         $this->_clientId = $clientId;
         $this->_clientSecret = $clientSecret;
+        $this->_callbackUrl = $callbackUrl;
     }
 
     function getClientId()
@@ -27,5 +30,15 @@ class Certificate
     function getClientSecret()
     {
         return $this->_clientSecret;
+    }
+
+    function setCallbackUrl($callbackUrl)
+    {
+        $this->_callbackUrl = $callbackUrl;
+    }
+
+    function getCallbackUrl()
+    {
+        return $this->_callbackUrl;
     }
 }

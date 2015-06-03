@@ -9,11 +9,15 @@ interface ServiceInterface
     
     function getAuthorizeUrl();
     
-    
     function request($url);
     
-    function refreshToken()
-    {
-        
-    }
+    function refreshToken();
+    
+    function getBaseAuthorizeUrl();
+    
+    function getBaseTokenUrl();
+    
+    function getRequestMethod();
+    
+    protected function _createTokenFromResponse($body);
 }

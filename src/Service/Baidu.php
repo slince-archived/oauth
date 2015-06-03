@@ -1,21 +1,35 @@
 <?php
-namespace Slince\OAuth;
+namespace Slince\OAuth\Service;
 
-class Baidu extends AbstractSite
+class Baidu extends AbstractService
 {
 
-    static $signal = 'baidu';
-    
-    protected $_urls = [
-        'authorizeUrl' => 'http://openapi.baidu.com/oauth/2.0/authorize',
-        'tokenUrl' => 'https://openapi.baidu.com/oauth/2.0/token',
-        'refreshTokenUrl' => 'https://openapi.baidu.com/rest/2.0/passport/users/getInfo'
-    ];
-    
-    protected $_requestHttpMethod = 'GET';
-    
-    function getCurrentUser()
+    function getBaseAuthorizeUrl()
     {
-        
+        return 'http://openapi.baidu.com/oauth/2.0/authorize';
     }
+    
+    function getBaseTokenUrl()
+    {
+        return 'https://openapi.baidu.com/oauth/2.0/token';
+    }
+    
+    function getRequestMethod()
+    {
+        return HttpMethod::REQUEST_GET;
+    }
+    
+    protected function _createTokenFromResponse($body)
+    {
+        $data = json_decode($body, true);
+        if (json_last_error() == JSON_ERROR_NONE) {
+            $this->_token->setAccessToken($data['access_token']);
+            $this->_token->setRefreshToken($data['refresh_token']);
+            $this->_token->setExpireTime($data['expires_in']);
+            return $this->_token;
+        } else {
+            
+        }
+    }
+    
 }

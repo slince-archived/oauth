@@ -1,5 +1,5 @@
 <?php
-namespace Slince\OAuth;
+namespace Slince\OAuth\Exception;
 
 class OAuthException extends \Exception
 {
