@@ -9,5 +9,11 @@ interface ServiceInterface
     
     function getAuthorizeUrl();
     
-    function getCurrentUser();
+    
+    function request($url);
+    
+    function refreshToken()
+    {
+        
+    }
 }

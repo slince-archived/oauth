@@ -1,7 +1,7 @@
 <?php
 namespace Slince\OAuth\Certificate;
 
-class CertificateInterface
+interface CertificateInterface
 {
 
     function setClientId();

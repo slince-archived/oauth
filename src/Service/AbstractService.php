@@ -1,42 +1,49 @@
 <?php
-namespace Slince\OAuth;
+namespace Slince\OAuth\Service;
+
+use Slince\OAuth\Certificate\CertificateInterface;
+use Slince\OAuth\Token\TokenInterface;
 
 abstract class AbstractService implements ServiceInterface
 {
 
     static $signal;
-    
-    protected $_clientId;
 
-    protected $_clientSecret;
-    
+    /**
+     * 身份证书
+     * 
+     * @var CertificateInterface
+     */
+    protected $_certificate;
+
+    /**
+     * token
+     * 
+     * @var TokenInterface
+     */
+    protected $_token;
+
     protected $_links = [];
-    
+
     protected $_api = [];
 
-    function __construct($clientId, $clientSecret)
+    function __construct(CertificateInterface $certificate, TokenInterface $token = null)
     {
-        $this->_clientId = $clientId;
-        $this->_clientSecret = $clientSecret;
+        $this->_certificate = $certificate;
+        $this->_token = $token;
     }
-
-    function getClientId()
+    
+    function request()
     {
-        return $this->_clientId;
+        
     }
-
-    function setClientId($clientId)
+    function requestToken($code)
     {
-        $this->_clientId = $clientId;
+        
     }
-
-    function getClientSecret()
+    function refreshToken(TokenInterface $token)
     {
-        return $this->_clientSecret;
+        
     }
-
-    function setClientSecret($clientSecret)
-    {
-        $this->_clientSecret = $clientSecret;
-    }
+    
 }
