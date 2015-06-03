@@ -5,6 +5,5 @@ class RequestFactory
 {
     static function create($url, $params, $httpMethod = 'get')
     {
-        return 
     }
 }

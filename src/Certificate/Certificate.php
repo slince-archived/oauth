@@ -1,18 +1,12 @@
 <?php
-namespace Slince\OAuth;
+namespace Slince\OAuth\Certificate;
 
-abstract class AbstractSite implements SiteInterface
+class Certificate
 {
 
-    static $signal;
-    
     protected $_clientId;
 
     protected $_clientSecret;
-    
-    protected $_links = [];
-    
-    protected $_api = [];
 
     function __construct($clientId, $clientSecret)
     {
@@ -33,10 +27,5 @@ abstract class AbstractSite implements SiteInterface
     function getClientSecret()
     {
         return $this->_clientSecret;
-    }
-
-    function setClientSecret($clientSecret)
-    {
-        $this->_clientSecret = $clientSecret;
     }
 }
