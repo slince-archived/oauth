@@ -1,30 +1,43 @@
 <?php
-namespace Slince\OAuth;
+namespace Slince\OAuth\Service;
 
-class QQ extends AbstractSite
+use Slince\OAuth\Exception\OAuthException;
+use Slince\OAuth\Token\TokenInterface;
+use Slince\OAuth\HttpMethod;
+
+class QQ extends AbstractService
 {
 
-    static $signal = 'qq';
-    
-    protected $_urls = [
-        'authorizeUrl' => 'https://graph.qq.com/oauth2.0/authorize',
-        'tokenUrl' => 'https://graph.qq.com/oauth2.0/token',
-        'refreshTokenUrl' => 'https://graph.qq.com/oauth2.0/token'
-    ];
-    protected $_requestHttpMethod = 'GET';
-    function setUrl($name, $url)
+    function getBaseUri()
     {
-        $this->_urls[$name] = $url;
+        return 'https://openapi.baidu.com/rest/2.0/';
     }
-    function setUrls($urls)
+
+    function getBaseAuthorizeUri()
     {
-        $this->_urls = $urls;
+        return 'https://graph.qq.com/oauth2.0/authorize';
     }
-    /**
-     * 当前用户
-     */
-    function me()
+
+    function getBaseTokenUri()
     {
-        
+        return 'https://graph.qq.com/oauth2.0/token';
+    }
+
+    function getRequestMethod()
+    {
+        return HttpMethod::REQUEST_GET;
+    }
+
+    protected function _refreshTokenFromResponse($body, TokenInterface $token)
+    {
+        $data = json_decode($body, true);
+        if (json_last_error() == JSON_ERROR_NONE) {
+            $token->setAccessToken($data['access_token']);
+            $token->setRefreshToken($data['refresh_token']);
+            $token->setExpireTime($data['expires_in']);
+            return $token;
+        } else {
+            throw new OAuthException('Error response body');
+        }
     }
 }

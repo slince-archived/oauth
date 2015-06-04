@@ -1,6 +1,8 @@
 <?php
 namespace Slince\OAuth\Service;
 
+use Slince\OAuth\Token\TokenInterface;
+
 interface ServiceInterface
 {
     function setCertificate();
@@ -9,15 +11,19 @@ interface ServiceInterface
     
     function getAuthorizeUrl();
     
-    function request($url);
+    function getBaseAuthorizeUri();
     
-    function refreshToken();
-    
-    function getBaseAuthorizeUrl();
-    
-    function getBaseTokenUrl();
+    function getBaseTokenUri();
     
     function getRequestMethod();
     
-    protected function _createTokenFromResponse($body);
+    function getBaseUri();
+    
+    function getFullUrl($path);
+    
+    function request($path, $params = []);
+    
+    function refreshToken(TokenInterface $token = null);
+    
+    protected function _retrieveTokenParamFromResponse($body, TokenInterface $token);
 }

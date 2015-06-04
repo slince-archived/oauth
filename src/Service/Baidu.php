@@ -1,15 +1,24 @@
 <?php
 namespace Slince\OAuth\Service;
 
+use Slince\OAuth\Exception\OAuthException;
+use Slince\OAuth\Token\TokenInterface;
+use Slince\OAuth\HttpMethod;
+
 class Baidu extends AbstractService
 {
 
-    function getBaseAuthorizeUrl()
+    function getBaseUri()
+    {
+        return 'https://openapi.baidu.com/rest/2.0/';
+    }
+    
+    function getBaseAuthorizeUri()
     {
         return 'http://openapi.baidu.com/oauth/2.0/authorize';
     }
     
-    function getBaseTokenUrl()
+    function getBaseTokenUri()
     {
         return 'https://openapi.baidu.com/oauth/2.0/token';
     }
@@ -19,17 +28,16 @@ class Baidu extends AbstractService
         return HttpMethod::REQUEST_GET;
     }
     
-    protected function _createTokenFromResponse($body)
+    protected function _refreshTokenFromResponse($body, TokenInterface $token)
     {
         $data = json_decode($body, true);
         if (json_last_error() == JSON_ERROR_NONE) {
-            $this->_token->setAccessToken($data['access_token']);
-            $this->_token->setRefreshToken($data['refresh_token']);
-            $this->_token->setExpireTime($data['expires_in']);
-            return $this->_token;
+            $token->setAccessToken($data['access_token']);
+            $token->setRefreshToken($data['refresh_token']);
+            $token->setExpireTime($data['expires_in']);
+            return $token;
         } else {
-            
+            throw new OAuthException('Error response body');
         }
     }
-    
 }
