@@ -9,11 +9,16 @@ class RequestFactory
 
     static $_httpclient;
 
-    static function create($url, $params = [], $httpMethod = 'get')
+    static function create($url, $options = [], $httpMethod = 'get')
     {
-        $response = self::getClient()->$httpMethod($url, $params);
-        if ($response->getStatusCode == 200) {
-            return $response->getBody();
+        try {
+            $response = self::getClient()->$httpMethod($url, $options);
+            if ($response->getStatusCode() == 200) {
+                return $response->getBody();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+            //throw new BadRequestException($url);
         }
         throw new BadRequestException($url);
     }
@@ -21,7 +26,7 @@ class RequestFactory
     static function getClient()
     {
         if (is_null(self::$_httpclient)) {
-            self::$_httpclient = new GuzzleHttp\Client();
+            self::$_httpclient = new Client();
         }
         return self::$_httpclient;
     }

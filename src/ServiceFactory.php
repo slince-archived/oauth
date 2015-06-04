@@ -2,6 +2,8 @@
 namespace Slince\OAuth;
 
 use Slince\OAuth\Certificate\CertificateInterface;
+use Slince\OAuth\Service\ServiceInterface;
+use Slince\OAuth\Token\TokenInterface;
 
 class ServiceFactory
 {
@@ -18,13 +20,20 @@ class ServiceFactory
         self::SERVICE_QQ => 'QQ'
     ];
 
-    static function create($serviceName, CertificateInterface $certificate)
+    /**
+     * 创建服务
+     * @param string $serviceName
+     * @param CertificateInterface $certificate
+     * @throws OAuthException
+     * @return ServiceInterface
+     */
+    static function get($serviceName, CertificateInterface $certificate, TokenInterface $token, $scopes = [])
     {
         if (isset(self::$serviceMap[$serviceName])) {
-            $serviceClassName = 'Service\\' . self::$serviceMap[$serviceName];
+            $serviceClassName = 'Slince\\OAuth\\Service\\' . self::$serviceMap[$serviceName];
         } else {
             throw new OAuthException(sprintf("Service %s does not support", $serviceName));
         }
-        return new $serviceClassName($certificate);
+        return new $serviceClassName($certificate, $token, $scopes);
     }
 }

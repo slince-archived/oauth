@@ -4,15 +4,15 @@ namespace Slince\OAuth\Certificate;
 interface CertificateInterface
 {
 
-    function setClientId();
-
-    function setClientSecret();
+    function setClientId($clientId);
 
     function getClientId();
+    
+    function setClientSecret($clientSecret);
 
     function getClientSecret();
 
-    function setCallbackUrl();
+    function setCallbackUrl($callbackUrl);
 
     function getCallbackUrl();
 }

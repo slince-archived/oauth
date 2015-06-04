@@ -28,7 +28,7 @@ class Baidu extends AbstractService
         return HttpMethod::REQUEST_GET;
     }
     
-    protected function _refreshTokenFromResponse($body, TokenInterface $token)
+    function retrieveTokenFromResponse($body, TokenInterface $token)
     {
         $data = json_decode($body, true);
         if (json_last_error() == JSON_ERROR_NONE) {

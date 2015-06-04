@@ -1,7 +1,7 @@
 <?php
 namespace Slince\OAuth\Certificate;
 
-class Certificate
+class Certificate implements CertificateInterface
 {
 
     protected $_clientId;
@@ -25,6 +25,11 @@ class Certificate
     function setClientId($clientId)
     {
         $this->_clientId = $clientId;
+    }
+
+    function setClientSecret($clientSecret)
+    {
+        $this->_clientSecret = $clientSecret;
     }
 
     function getClientSecret()

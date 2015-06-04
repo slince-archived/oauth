@@ -4,6 +4,8 @@ namespace Slince\OAuth\Service;
 use Slince\OAuth\Certificate\CertificateInterface;
 use Slince\OAuth\Token\TokenInterface;
 use Slince\OAuth\Exception\ExpiredTokenException;
+use Slince\OAuth\RequestFactory;
+use Slince\OAuth\HttpMethod;
 
 abstract class AbstractService implements ServiceInterface
 {
@@ -24,11 +26,31 @@ abstract class AbstractService implements ServiceInterface
     
     protected $_scopes = [];
     
-    function __construct(CertificateInterface $certificate, TokenInterface $token, $scopse = [])
+    function __construct(CertificateInterface $certificate, TokenInterface $token, $scopes = [])
     {
         $this->_certificate = $certificate;
         $this->_token = $token;
-        $this->_scopse = $scopse;
+        $this->_scopes = $scopes;
+    }
+    
+    function setCertificate(CertificateInterface $certificate)
+    {
+        $this->_certificate = $certificate;
+    }
+    
+    function getCertificate()
+    {
+        return $this->_certificate;
+    }
+    
+    function setToken(TokenInterface $token)
+    {
+        $this->_token = $token;
+    }
+    
+    function getToken()
+    {
+        return $this->_token;
     }
     
     /**
@@ -44,7 +66,7 @@ abstract class AbstractService implements ServiceInterface
             'redirect_uri' => $this->_certificate->getCallbackUrl(),
         ];
         if (! empty($this->_scopes)) {
-            $requestParams['scope'] = implode(' ', $this->_scopse);
+            $requestParams['scope'] = implode(' ', $this->_scopes);
         }
         $params = array_merge($requestParams, $additionalParams);
         return $this->getBaseAuthorizeUri() . '?' . http_build_query($params);
@@ -59,8 +81,19 @@ abstract class AbstractService implements ServiceInterface
             'redirect_uri' => $this->_certificate->getCallbackUrl(),
             'code' => $code
         ];
-        $body = RequestFactory::create($this->getBaseTokenUri(), $requestParams, $this->getRequestMethod());
-        $this->_retrieveTokenParamFromResponse($body, $this->_token);
+        if ($this->getRequestMethod() == HttpMethod::REQUEST_GET) {
+            $options = [
+                'query' => $requestParams,
+                'verify' => false
+            ];
+        } else {
+            $options = [
+                'json' => $requestParams,
+                'verify' => false
+            ];
+        }
+        $body = RequestFactory::create($this->getBaseTokenUri(), $options, $this->getRequestMethod());
+        $this->retrieveTokenFromResponse($body, $this->_token);
         return $this->_token;
     }
     
@@ -84,10 +117,21 @@ abstract class AbstractService implements ServiceInterface
             'grant_type' => 'refresh_token',
             'client_id' => $this->_certificate->getClientId(),
             'client_secret' => $this->_certificate->getClientSecret(),
-            'refresh_token' => $token->getRefreshToken(),
+            'refresh_token' => $token->getRefreshToken()
         ];
-        $body = RequestFactory::create($this->getBaseTokenUri(), $requestParams, $this->getRequestMethod());
-        return $this->_retrieveTokenParamFromResponse($body, $token);
+        if ($this->getRequestMethod() == HttpMethod::REQUEST_GET) {
+            $options = [
+                'query' => $requestParams,
+                'verify' => false
+            ];
+        } else {
+            $options = [
+                'json' => $requestParams,
+                'verify' => false
+            ];
+        }
+        $body = RequestFactory::create($this->getBaseTokenUri(), $options, $this->getRequestMethod());
+        return $this->retrieveTokenFromResponse($body, $token);
     }
     
     function getFullUrl($path)

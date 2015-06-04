@@ -4,18 +4,15 @@ namespace Slince\OAuth\Token;
 interface TokenInterface
 {
 
-    function setAccessToken();
+    function setAccessToken($token);
 
     function getAccessToken();
 
-    function setRefreshToken();
+    function setRefreshToken($token);
 
-    function getRefreshToken();
-
-    function setExpireTime();
+    function setExpireTime($time);
 
     function getExpireTime();
 
     function isExpired();
-    
 }
