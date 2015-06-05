@@ -11,6 +11,7 @@ class RequestFactory
 
     static function create($url, $options = [], $httpMethod = 'get')
     {
+        $options['verify'] = false;
         try {
             $response = self::getClient()->$httpMethod($url, $options);
             if ($response->getStatusCode() == 200) {
@@ -20,13 +21,14 @@ class RequestFactory
             throw $e;
             //throw new BadRequestException($url);
         }
-        throw new BadRequestException($url);
     }
 
     static function getClient()
     {
         if (is_null(self::$_httpclient)) {
-            self::$_httpclient = new Client();
+            self::$_httpclient = new Client([
+                'verify' => false
+            ]);
         }
         return self::$_httpclient;
     }

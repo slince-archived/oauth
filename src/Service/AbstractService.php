@@ -81,31 +81,29 @@ abstract class AbstractService implements ServiceInterface
             'redirect_uri' => $this->_certificate->getCallbackUrl(),
             'code' => $code
         ];
-        if ($this->getRequestMethod() == HttpMethod::REQUEST_GET) {
-            $options = [
-                'query' => $requestParams,
-                'verify' => false
-            ];
-        } else {
-            $options = [
-                'json' => $requestParams,
-                'verify' => false
-            ];
-        }
-        $body = RequestFactory::create($this->getBaseTokenUri(), $options, $this->getRequestMethod());
+        $body = RequestFactory::create(
+            $this->getBaseTokenUri(), 
+            $this->_buildRequestParam($requestParams), 
+            $this->getRequestMethod()
+        );
         $this->retrieveTokenFromResponse($body, $this->_token);
         return $this->_token;
     }
     
     function request($path, $params = [])
     {
+        print_r($this->_token);
         if ($this->_token->isExpired()) {
             throw new ExpiredTokenException();
         }
         $requestParams = array_merge([
             'access_token' => $this->_token->getAccessToken()
         ], $params);
-        $body = RequestFactory::create($this->getFullUrl($path), $requestParams, $this->getRequestMethod());
+        $body = RequestFactory::create(
+            $this->getFullUrl($path),
+            $this->_buildRequestParam($requestParams),
+            $this->getRequestMethod()
+        );
         return $this->_parseResponse($body);
     }
     function refreshToken(TokenInterface $token = null)
@@ -119,32 +117,43 @@ abstract class AbstractService implements ServiceInterface
             'client_secret' => $this->_certificate->getClientSecret(),
             'refresh_token' => $token->getRefreshToken()
         ];
-        if ($this->getRequestMethod() == HttpMethod::REQUEST_GET) {
-            $options = [
-                'query' => $requestParams,
-                'verify' => false
-            ];
-        } else {
-            $options = [
-                'json' => $requestParams,
-                'verify' => false
-            ];
-        }
-        $body = RequestFactory::create($this->getBaseTokenUri(), $options, $this->getRequestMethod());
+        $body = RequestFactory::create(
+            $this->getBaseTokenUri(), 
+            $this->_buildRequestParam($requestParams), 
+            $this->getRequestMethod()
+        );
         return $this->retrieveTokenFromResponse($body, $token);
     }
     
     function getFullUrl($path)
     {
         if (! empty($path) && $path{0} == '/') {
-            $url = $this->getHostFromBaseUri() . $path;
+            $url = $this->_getHostFromBaseUri() . $path;
         } else {
             $url = $this->getBaseUri() . $path;
         }
         return $url;
     }
-    function getHostFromBaseUri()
+    protected function _buildRequestParam($param)
+    {
+        $options = [];
+        switch ($this->getRequestMethod()) {
+            case HttpMethod::REQUEST_GET:
+                $options = [
+                    'query' => $param,
+                ];
+                break;
+            case HttpMethod::REQUEST_POST:
+                $options = [
+                    'form_params' => $param,
+                ];
+                break;
+        }
+        return $options;
+    }
+    protected function _getHostFromBaseUri()
     {
         return parse_url($this->getBaseUri(), PHP_URL_HOST);
     }
+    abstract protected function _parseResponse($body);
 }
