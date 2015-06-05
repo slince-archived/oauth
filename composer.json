@@ -10,8 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle" : "5.2.0",
-        "mashape/unirest-php": "2.6.0",
+        "guzzlehttp/guzzle" : "~5.2.0",
+        "mashape/unirest-php": "~2.6.0",
         "lusitanian/oauth": "~0.3"
     },
     "autoload": {

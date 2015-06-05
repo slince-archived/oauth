@@ -9,6 +9,8 @@ class Token implements TokenInterface
     private $_refreshToken;
 
     private $_expireTime;
+    
+    private $_extraParams = [];
 
     function setAccessToken($token)
     {
@@ -43,5 +45,25 @@ class Token implements TokenInterface
     function isExpired()
     {
         return time() > $this->_expireTime;
+    }
+    
+    function setExtraParams(array $param)
+    {
+        $this->_extraParams = $param;
+    }
+    
+    function getExtraParams()
+    {
+        return $this->_extraParams;
+    }
+    
+    function setExtraParam($name, $value)
+    {
+        $this->_extraParams[$name] = $value;
+    }
+    
+    function getExtraParam($name, $default = null)
+    {
+        return isset($this->_extraParams[$name]) ? $this->_extraParams[$name] : $default;
     }
 }

@@ -18,8 +18,7 @@ class RequestFactory
                 return $response->getBody();
             }
         } catch (\Exception $e) {
-            throw $e;
-            //throw new BadRequestException($url);
+            throw new BadRequestException($url);
         }
     }
 

@@ -15,4 +15,13 @@ interface TokenInterface
     function getExpireTime();
 
     function isExpired();
+    
+    function setExtraParams(array $params);
+    
+    function getExtraParams();
+    
+    function setExtraParam($name, $value);
+    
+    function getExtraParam($name);
+    
 }

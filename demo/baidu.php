@@ -6,8 +6,8 @@ use Slince\OAuth\ServiceFactory;
 use Slince\OAuth\Token\Token;
 
 $certificate = new Certificate(
-    'XP7GUBfoXMiGjYghCZyatKyF', 
-    'qsgDdmwAuo2Pvag0UwpFdXOGGXXOQYTF',
+    $config['baidu']['clientId'], 
+    $config['baidu']['clientSecret'], 
     'http://work.slince.com/oauth/demo/baidu.php'
 );
 $token = new Token();
