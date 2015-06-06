@@ -14,7 +14,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\ServiceInterface::getBaseUri()
      */
     function getBaseUri()
@@ -24,7 +24,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\ServiceInterface::getBaseAuthorizeUri()
      */
     function getBaseAuthorizeUri()
@@ -34,7 +34,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\ServiceInterface::getBaseTokenUri()
      */
     function getBaseTokenUri()
@@ -44,7 +44,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\ServiceInterface::getRequestMethod()
      */
     function getRequestMethod()
@@ -54,7 +54,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\ServiceInterface::getAuthorizeMethod()
      */
     function getAuthorizeMethod()
@@ -64,7 +64,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\ServiceInterface::retrieveTokenFromResponse()
      */
     function retrieveTokenFromResponse($body, TokenInterface $token)
@@ -81,7 +81,7 @@ class Baidu extends AbstractService
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Slince\OAuth\Service\AbstractService::_parseResponse()
      */
     protected function _parseResponse($body)

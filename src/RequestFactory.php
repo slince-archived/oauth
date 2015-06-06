@@ -1,4 +1,8 @@
 <?php
+/**
+ * slince oauth2.0 library
+ * @author Tao <taosikai@yeah.net>
+ */
 namespace Slince\OAuth;
 
 use GuzzleHttp\Client;
@@ -9,6 +13,13 @@ class RequestFactory
 
     static $_httpclient;
 
+    /**
+     * 创建一个请求
+     * @param string $url
+     * @param array $options
+     * @param string $httpMethod
+     * @throws BadRequestException
+     */
     static function create($url, $options = [], $httpMethod = 'get')
     {
         $options['verify'] = false;
@@ -22,6 +33,10 @@ class RequestFactory
         }
     }
 
+    /**
+     * 获取请求client
+     * @return \GuzzleHttp\Client
+     */
     static function getClient()
     {
         if (is_null(self::$_httpclient)) {

@@ -85,7 +85,7 @@ abstract class AbstractService implements ServiceInterface
      *
      * @see \Slince\OAuth\Service\ServiceInterface::getAuthorizeUrl()
      */
-    function getAuthorizeUrl($additionalParams = [])
+    function getAuthorizeUrl($extraParams = [])
     {
         $requestParams = [
             'response_type' => 'code',
@@ -95,7 +95,7 @@ abstract class AbstractService implements ServiceInterface
         if (! empty($this->_scopes)) {
             $requestParams['scope'] = implode(' ', $this->_scopes);
         }
-        $params = array_merge($requestParams, $additionalParams);
+        $params = array_merge($requestParams, $extraParams);
         return $this->getBaseAuthorizeUri() . '?' . http_build_query($params);
     }
 
@@ -204,11 +204,11 @@ abstract class AbstractService implements ServiceInterface
     {
         return parse_url($this->getBaseUri(), PHP_URL_HOST);
     }
-
+    
     /**
      * 解析api返回结果
      *
-     * @param string $body            
+     * @param string $body
      */
-    abstract protected function _parseResponse($body);
+    abstract function _parseResponse($body);
 }

@@ -38,9 +38,9 @@ interface ServiceInterface
     /**
      * 获取授权页地址
      *
-     * @param array $additionalParams            
+     * @param array $extraParams            
      */
-    function getAuthorizeUrl($additionalParams = []);
+    function getAuthorizeUrl($extraParams = []);
 
     /**
      * 授权页基本地址

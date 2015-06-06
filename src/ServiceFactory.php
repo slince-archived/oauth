@@ -1,4 +1,8 @@
 <?php
+/**
+ * slince oauth2.0 library
+ * @author Tao <taosikai@yeah.net>
+ */
 namespace Slince\OAuth;
 
 use Slince\OAuth\Certificate\CertificateInterface;
@@ -8,12 +12,32 @@ use Slince\OAuth\Token\TokenInterface;
 class ServiceFactory
 {
 
+    /**
+     * weibo
+     *
+     * @var string
+     */
     const SERVICE_WEIBO = 'weibo';
 
+    /**
+     * baidu
+     *
+     * @var string
+     */
     const SERVICE_BAIDU = 'baidu';
 
+    /**
+     * qq
+     *
+     * @var string
+     */
     const SERVICE_QQ = 'qq';
 
+    /**
+     * service map
+     *
+     * @var array
+     */
     static $serviceMap = [
         self::SERVICE_WEIBO => 'Weibo',
         self::SERVICE_BAIDU => 'Baidu',
@@ -22,8 +46,9 @@ class ServiceFactory
 
     /**
      * 创建服务
-     * @param string $serviceName
-     * @param CertificateInterface $certificate
+     *
+     * @param string $serviceName            
+     * @param CertificateInterface $certificate            
      * @throws OAuthException
      * @return ServiceInterface
      */
