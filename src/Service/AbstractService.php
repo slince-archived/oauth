@@ -210,5 +210,5 @@ abstract class AbstractService implements ServiceInterface
      *
      * @param string $body
      */
-    abstract function _parseResponse($body);
+    abstract protected function _parseResponse($body);
 }
